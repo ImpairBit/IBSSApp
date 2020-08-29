@@ -1058,8 +1058,8 @@ var CONFIG = /** @class */ (function () {
         name: "Top-Secret",
         tag: "Expand yourself!!!"
     };
-    CONFIG.siteUrl = "http://localhost:8081/";
-    CONFIG.apiUrl = "http://localhost:8083/";
+    CONFIG.siteUrl = "http://208.109.8.60:8081/";
+    CONFIG.apiUrl = "http://208.109.8.60:8083/";
     CONFIG.token = null;
     CONFIG.user = null;
     CONFIG.isNavHidden = false;
