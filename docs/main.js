@@ -40,6 +40,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_page_not_found_page_not_found_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/page-not-found/page-not-found.component */ "./src/components/page-not-found/page-not-found.component.ts");
 /* harmony import */ var _services_auth_guard_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../services/auth-guard.service */ "./src/services/auth-guard.service.ts");
 /* harmony import */ var src_components_main_profile_profile_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! src/components/main/profile/profile.component */ "./src/components/main/profile/profile.component.ts");
+/* harmony import */ var src_components_main_wizard_wizard_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! src/components/main/wizard/wizard.component */ "./src/components/main/wizard/wizard.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -53,11 +54,13 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 
+
 var routes = [
     { path: '', redirectTo: '/get-started', pathMatch: 'full' },
     { path: 'get-started', component: _components_auth_page_auth_page_component__WEBPACK_IMPORTED_MODULE_3__["AuthPageComponent"] },
     { path: 'dashboard', component: _components_main_dashboard_dashboard_component__WEBPACK_IMPORTED_MODULE_2__["DashboardComponent"], canActivate: [_services_auth_guard_service__WEBPACK_IMPORTED_MODULE_5__["AuthGuard"]] },
     { path: 'profile', component: src_components_main_profile_profile_component__WEBPACK_IMPORTED_MODULE_6__["ProfileComponent"], canActivate: [_services_auth_guard_service__WEBPACK_IMPORTED_MODULE_5__["AuthGuard"]] },
+    { path: 'wizard', component: src_components_main_wizard_wizard_component__WEBPACK_IMPORTED_MODULE_7__["WizardComponent"], canActivate: [_services_auth_guard_service__WEBPACK_IMPORTED_MODULE_5__["AuthGuard"]] },
     { path: '404', component: _components_page_not_found_page_not_found_component__WEBPACK_IMPORTED_MODULE_4__["PageNotFoundComponent"] },
     { path: '**', redirectTo: '/404' }
 ];
@@ -111,6 +114,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AppComponent", function() { return AppComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../config */ "./src/config.ts");
+/* harmony import */ var src_services_auth_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/services/auth.service */ "./src/services/auth.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -122,14 +126,17 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 };
 
 
+
 var AppComponent = /** @class */ (function () {
-    function AppComponent() {
+    function AppComponent(authServices) {
+        this.authServices = authServices;
         this.title = _config__WEBPACK_IMPORTED_MODULE_1__["CONFIG"].app.name;
         this.isLoggedIn = _config__WEBPACK_IMPORTED_MODULE_1__["CONFIG"].isLoggedin;
         this.config = _config__WEBPACK_IMPORTED_MODULE_1__["CONFIG"];
     }
     AppComponent.prototype.ngOnInit = function () {
         // this.registerAppEvents();
+        this.authServices.checkToken();
     };
     AppComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -137,7 +144,7 @@ var AppComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./app.component.html */ "./src/app/app.component.html"),
             styles: [__webpack_require__(/*! ./app.component.scss */ "./src/app/app.component.scss")]
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [src_services_auth_service__WEBPACK_IMPORTED_MODULE_2__["AuthService"]])
     ], AppComponent);
     return AppComponent;
 }());
@@ -179,6 +186,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var src_services_authorised_side_nav__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! src/services/authorised-side-nav */ "./src/services/authorised-side-nav.ts");
 /* harmony import */ var ngx_toastr__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ngx-toastr */ "./node_modules/ngx-toastr/fesm5/ngx-toastr.js");
 /* harmony import */ var src_components_main_profile_profile_component__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! src/components/main/profile/profile.component */ "./src/components/main/profile/profile.component.ts");
+/* harmony import */ var _components_main_wizard_wizard_component__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../components/main/wizard/wizard.component */ "./src/components/main/wizard/wizard.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -200,9 +208,8 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 
-// import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
 
-// import { EventBrokerModule } from 'ng-event-broker';
+
 
 
 
@@ -226,7 +233,8 @@ var AppModule = /** @class */ (function () {
                 _components_layout_authorised_authorised_top_nav_authorised_top_nav_component__WEBPACK_IMPORTED_MODULE_17__["AuthorisedTopNavComponent"],
                 src_components_layout_authorised_authorised_side_nav_authorised_side_nav_component__WEBPACK_IMPORTED_MODULE_18__["AuthorisedSideNavComponent"],
                 src_components_layout_authorised_authorised_side_nav_toggler_authorised_side_nav_toggler_component__WEBPACK_IMPORTED_MODULE_19__["AuthorisedSideNavTogglerComponent"],
-                src_components_main_profile_profile_component__WEBPACK_IMPORTED_MODULE_22__["ProfileComponent"]
+                src_components_main_profile_profile_component__WEBPACK_IMPORTED_MODULE_22__["ProfileComponent"],
+                _components_main_wizard_wizard_component__WEBPACK_IMPORTED_MODULE_23__["WizardComponent"]
             ],
             imports: [
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
@@ -237,7 +245,7 @@ var AppModule = /** @class */ (function () {
                 angular_password_strength_meter__WEBPACK_IMPORTED_MODULE_8__["PasswordStrengthMeterModule"],
                 _angular_common_http__WEBPACK_IMPORTED_MODULE_12__["HttpClientModule"],
                 _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_15__["BrowserAnimationsModule"],
-                ngx_toastr__WEBPACK_IMPORTED_MODULE_21__["ToastrModule"].forRoot(),
+                ngx_toastr__WEBPACK_IMPORTED_MODULE_21__["ToastrModule"].forRoot()
             ],
             providers: [_angular_common_http__WEBPACK_IMPORTED_MODULE_12__["HttpClientModule"], _services_auth_service__WEBPACK_IMPORTED_MODULE_11__["AuthService"], src_services_auth_guard_service__WEBPACK_IMPORTED_MODULE_16__["AuthGuard"], src_services_authorised_side_nav__WEBPACK_IMPORTED_MODULE_20__["AuthorisedSideNavService"]],
             bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_3__["AppComponent"]]
@@ -386,7 +394,7 @@ var AuthorisedSideNavTogglerComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<nav id=\"sidebar\" class=\"navbar-dark bg-dark\" [ngClass]=\"{'hidden': sideNavService.hideSideNav }\">\n  <div class=\"text-center\">\n    <img src=\"../../../../assets/img_avatar.png\" alt=\"Avatar\" class=\"avatar\">\n    <div>{{config?.user?.name}}</div>\n  </div>\n  <ul class=\"navbar-nav\">\n    <li class=\"nav-item active\">\n      <a class=\"nav-link\" routerLink=\"/dashboard\" routerLinkActive=\"active\">Dashboard</a>\n    </li>\n    <li class=\"nav-item\">\n      <a class=\"nav-link\"  routerLink=\"/profile\" routerLinkActive=\"active\">Profile</a>\n    </li>\n    <li class=\"nav-item\">\n      <a class=\"nav-link\" href=\"javascript:void(0)\" (click)=\"onLogout()\">Logout</a>\n    </li>\n  </ul>\n</nav>"
+module.exports = "<nav id=\"sidebar\" class=\"navbar-dark bg-dark\" [ngClass]=\"{'hidden': sideNavService.hideSideNav }\">\n  <div class=\"text-center\">\n    <img src=\"../../../../assets/img_avatar.png\" alt=\"Avatar\" class=\"avatar\">\n    <div>{{config?.user?.name}}</div>\n  </div>\n  <ul class=\"navbar-nav\" *ngIf=\"!isWizard()\">\n    <li class=\"nav-item active\">\n      <a class=\"nav-link\" routerLink=\"/dashboard\" routerLinkActive=\"active\">Dashboard</a>\n    </li>\n    <li class=\"nav-item\">\n      <a class=\"nav-link\"  routerLink=\"/wizard\" routerLinkActive=\"active\">Create</a>\n    </li>\n    <li class=\"nav-item\">\n      <a class=\"nav-link\"  routerLink=\"/profile\" routerLinkActive=\"active\">Profile</a>\n    </li>\n    <li class=\"nav-item\">\n      <a class=\"nav-link\" href=\"javascript:void(0)\" (click)=\"onLogout()\">Logout</a>\n    </li>\n  </ul>\n  <ul class=\"navbar-nav\" *ngIf=\"isWizard()\">\n    <li class=\"nav-item active\">\n      <a class=\"nav-link\" (click)=\"onOpenLayouts()\">Layout</a>\n    </li>\n    <li class=\"nav-item\">\n      <a class=\"nav-link\" href=\"javascript:void(0)\" (click)=\"onBack()\">Back</a>\n    </li>\n  </ul>\n</nav>"
 
 /***/ }),
 
@@ -415,6 +423,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var src_services_authorised_side_nav__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! src/services/authorised-side-nav */ "./src/services/authorised-side-nav.ts");
 /* harmony import */ var src_config__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/config */ "./src/config.ts");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -428,17 +437,30 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var AuthorisedSideNavComponent = /** @class */ (function () {
-    function AuthorisedSideNavComponent(sideNavService, router) {
+    function AuthorisedSideNavComponent(sideNavService, router, _location) {
         this.sideNavService = sideNavService;
         this.router = router;
+        this._location = _location;
         this.config = src_config__WEBPACK_IMPORTED_MODULE_2__["CONFIG"];
     }
     AuthorisedSideNavComponent.prototype.ngOnInit = function () {
     };
+    AuthorisedSideNavComponent.prototype.isWizard = function () {
+        console.log(this.router.url);
+        ;
+        return (this.router.url.indexOf('wizard') != -1);
+    };
+    AuthorisedSideNavComponent.prototype.onBack = function () {
+        this._location.back();
+    };
     AuthorisedSideNavComponent.prototype.onLogout = function () {
-        this.router.navigate(['/get-started']);
+        sessionStorage.clear();
+        this.config.token = null;
+        this.config.user = null;
         this.config.isLoggedin = false;
+        this.router.navigate(['/get-started']);
     };
     AuthorisedSideNavComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -447,7 +469,8 @@ var AuthorisedSideNavComponent = /** @class */ (function () {
             styles: [__webpack_require__(/*! ./authorised-side-nav.component.scss */ "./src/components/layout/authorised/authorised-side-nav/authorised-side-nav.component.scss")]
         }),
         __metadata("design:paramtypes", [src_services_authorised_side_nav__WEBPACK_IMPORTED_MODULE_1__["AuthorisedSideNavService"],
-            _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"]])
+            _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"],
+            _angular_common__WEBPACK_IMPORTED_MODULE_4__["Location"]])
     ], AuthorisedSideNavComponent);
     return AuthorisedSideNavComponent;
 }());
@@ -529,7 +552,7 @@ var AuthorisedTopNavComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\">\n  <div class=\"col-sm-12 col-md-12 col-lg-12 mx-auto\">\n    <div class=\"card card-signin my-5\">\n      <div class=\"card-body\">\n        <div class=\"text-center\"><h5>Already have an account?</h5></div>\n        <!-- <form class=\"form-signin\"> -->\n          <div class=\"row\">\n            <div class=\"col-sm-12 col-md-4 col-lg-5\">\n              <div class=\"form-label-group\">\n                <label for=\"inputEmail\">Email address</label>\n                <input type=\"email\" id=\"inputEmail\" class=\"form-control\" placeholder=\"Email address\" required autofocus [(ngModel)]=\"login.email\">\n              </div>\n            </div>\n            <div class=\"col-sm-12 col-md-4 col-lg-5\">\n              <div class=\"form-label-group\">\n                <label for=\"inputPassword\">Password</label>\n                <input type=\"password\" id=\"inputPassword\" class=\"form-control\" placeholder=\"Password\" required [(ngModel)]=\"login.password\">\n              </div>\n            </div>\n            <div class=\"col-sm-12 col-md-4 col-lg-2\">\n              <label for=\"submit\">&nbsp;</label>\n              <button class=\"btn btn-primary btn-block text-uppercase\" type=\"submit\" (click)=\"onLogin()\">Login&nbsp;<i class=\"fas fa-sign-in-alt\"></i></button>\n              <a class=\"text-primary pwd-reset\" href=\"javascript:void(0)\" (click)=\"onForgotPwd()\">Forgot password?</a>\n            </div>\n          </div>\n        <!-- </form>   -->\n      </div>\n    </div>\n  </div>\n</div>\n\n<!-- Forgot Password -->\n<div class=\"modal fade\" id=\"forgotPasswordModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"forgotPasswordModalTitle\" aria-hidden=\"true\">\n  <div class=\"modal-dialog modal-dialog-centered\" role=\"document\">\n    <div class=\"modal-content\">\n      <div class=\"modal-header\">\n        <h5 class=\"modal-title\">Forgot Password?</h5>\n        <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n          <span aria-hidden=\"true\">&times;</span>\n        </button>\n      </div>\n      <div class=\"modal-body\">\n        <ng-container *ngIf=\"!canChangePassword\">\n          <ng-container *ngIf=\"!canEnterOTP\">\n            <div class=\"form-label-group\">\n              <label for=\"inputEmail\">Registered Email address</label>\n              <input type=\"email\" id=\"inputEmail\" class=\"form-control\" placeholder=\"Email address\" required autofocus [(ngModel)]=\"registeredEmail\">\n            </div>\n            <br/>\n            <button class=\"btn btn-primary text-uppercase\" type=\"submit\" [disabled]=\"!registeredEmail || registeredEmail.trim() === ''\" (click)=\"onGetOPT()\">Get OTP</button>\n          </ng-container>\n          <ng-container *ngIf=\"canEnterOTP\">\n            <div class=\"row\">\n              <div class=\"col-12\">\n                <label for=\"inputEmail\">Enter OTP sent to {{registeredEmail}}</label>\n                <ng-otp-input #ngOtpInput (onInputChange)=\"onOtpChange($event)\" *ngIf=\"showOtpComponent\" [config]=\"config\"></ng-otp-input>\n                <span *ngIf=\"otp\" class=\"o-t-p\">Entered otp :-{{otp}}</span>\n              </div>\n            </div>  \n          </ng-container>\n        </ng-container>\n        <ng-container *ngIf=\"canChangePassword\">\n          <div class=\"form-label-group\">\n            <label for=\"inputEmail\">New Password</label>\n            <input type=\"password\" id=\"inputEmail\" class=\"form-control\" placeholder=\"Email address\" required autofocus [(ngModel)]=\"password.new\">\n          </div>\n          <div class=\"form-label-group\">\n            <label for=\"inputEmail\">Confirm Password</label>\n            <input type=\"password\" id=\"inputEmail\" class=\"form-control\" placeholder=\"Email address\" required autofocus [(ngModel)]=\"password.confirm\">\n          </div>\n          <password-strength-meter [password]=\"password.new\"></password-strength-meter>\n          <br/>\n          <button class=\"btn btn-primary text-uppercase\" type=\"submit\" [disabled]=\"!registeredEmail || registeredEmail.trim() === ''\" (click)=\"onChangePassword()\">Change</button>\n        </ng-container>\n      </div>\n    </div>\n  </div>\n</div>\n"
+module.exports = "<div class=\"row\">\n  <div class=\"col-sm-12 col-md-12 col-lg-12 mx-auto\">\n    <div class=\"card card-signin my-5\">\n      <div class=\"card-body\">\n        <div class=\"text-center\"><h5>Already have an account?</h5></div>\n        <!-- <form class=\"form-signin\"> -->\n          <div class=\"row\">\n            <div class=\"col-sm-12 col-md-4 col-lg-5\">\n              <div class=\"form-label-group\">\n                <label for=\"inputEmail\">Email address</label>\n                <input type=\"email\" id=\"inputEmail\" class=\"form-control\" placeholder=\"Email address\" required autofocus [(ngModel)]=\"login.email\">\n              </div>\n            </div>\n            <div class=\"col-sm-12 col-md-4 col-lg-5\">\n              <div class=\"form-label-group\">\n                <label for=\"inputPassword\">Password</label>\n                <div class=\"input-group mb-3\">\n                  <input [type]=\"!isVisible?.password?'password':'text'\" id=\"inputPassword\" class=\"form-control\" placeholder=\"Password\" required [(ngModel)]=\"login.password\">\n                  <div class=\"input-group-append\" id=\"button-addon3\">\n                    <button class=\"btn btn-outline-primary border\" type=\"button\" (click)=\"isVisible.password = !isVisible.password\">\n                      <i class=\"fa\" [ngClass]=\"{'fa-eye':!isVisible.password, 'fa-eye-slash':isVisible.password}\" aria-hidden=\"true\"></i>\n                    </button>\n                  </div>\n                </div>\n              </div>\n            </div>\n            <div class=\"col-sm-12 col-md-4 col-lg-2\">\n              <label for=\"submit\">&nbsp;</label>\n              <button class=\"btn btn-primary btn-block text-uppercase\" type=\"submit\" (click)=\"onLogin()\">Login&nbsp;<i class=\"fas fa-sign-in-alt\"></i></button>\n              <a class=\"text-primary pwd-reset\" href=\"javascript:void(0)\" (click)=\"onForgotPwd()\">Forgot password?</a>\n            </div>\n          </div>\n        <!-- </form>   -->\n      </div>\n    </div>\n  </div>\n</div>\n\n<!-- Forgot Password -->\n<div class=\"modal fade\" id=\"forgotPasswordModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"forgotPasswordModalTitle\" aria-hidden=\"true\">\n  <div class=\"modal-dialog modal-dialog-centered\" role=\"document\">\n    <div class=\"modal-content\">\n      <div class=\"modal-header\">\n        <h5 class=\"modal-title\">Forgot Password?</h5>\n        <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n          <span aria-hidden=\"true\">&times;</span>\n        </button>\n      </div>\n      <div class=\"modal-body\">\n        <ng-container *ngIf=\"!canChangePassword\">\n          <ng-container *ngIf=\"!canEnterOTP\">\n            <div class=\"form-label-group\">\n              <label for=\"inputEmail\">Registered Email address</label>\n              <input type=\"email\" id=\"inputEmail\" class=\"form-control\" placeholder=\"Email address\" required autofocus [(ngModel)]=\"registeredEmail\">\n            </div>\n            <br/>\n            <button class=\"btn btn-primary text-uppercase\" type=\"submit\" [disabled]=\"!registeredEmail || registeredEmail.trim() === ''\" (click)=\"onGetOPT()\">Get OTP</button>\n          </ng-container>\n          <ng-container *ngIf=\"canEnterOTP\">\n            <div class=\"row\">\n              <div class=\"col-12\">\n                <label for=\"inputEmail\">Enter OTP sent to {{registeredEmail}}</label>\n                <ng-otp-input #ngOtpInput (onInputChange)=\"onOtpChange($event)\" *ngIf=\"showOtpComponent\" [config]=\"config\"></ng-otp-input>\n                <span *ngIf=\"otp\" class=\"o-t-p\">Entered otp :-{{otp}}</span>\n              </div>\n            </div>  \n          </ng-container>\n        </ng-container>\n        <ng-container *ngIf=\"canChangePassword\">\n          <div class=\"form-label-group\">\n            <label for=\"inputEmail\">New Password</label>\n            <input type=\"password\" id=\"inputEmail\" class=\"form-control\" placeholder=\"Email address\" required autofocus [(ngModel)]=\"password.new\">\n          </div>\n          <div class=\"form-label-group\">\n            <label for=\"inputEmail\">Confirm Password</label>\n            <input type=\"password\" id=\"inputEmail\" class=\"form-control\" placeholder=\"Email address\" required autofocus [(ngModel)]=\"password.confirm\">\n          </div>\n          <password-strength-meter [password]=\"password.new\"></password-strength-meter>\n          <br/>\n          <button class=\"btn btn-primary text-uppercase\" type=\"submit\" [disabled]=\"!registeredEmail || registeredEmail.trim() === ''\" (click)=\"onChangePassword()\">Change</button>\n        </ng-container>\n      </div>\n    </div>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -569,6 +592,9 @@ var LoginComponent = /** @class */ (function () {
         this.login = {
             email: "",
             password: ""
+        };
+        this.isVisible = {
+            password: false,
         };
         this.registeredEmail = "";
         this.canEnterOTP = false;
@@ -649,7 +675,7 @@ var LoginComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"content-wrapper pt-3\" [ngClass]=\"{'menu-collapsed':config.isNavHidden}\">\n  <!-- Content Header (Page header) -->\n  <!-- <section class=\"content-header\">\n    <div class=\"container-fluid\">\n      <div class=\"row mb-2\">\n        <div class=\"col-sm-6\">\n          <h1>Dashboard</h1>\n        </div>\n      </div>\n    </div>\n  </section> -->\n\n  <!-- Main content -->\n  <section class=\"content\">\n    <div class=\"container-fluid\">\n      <div class=\"row\">\n        <div class=\"col-md-12\">\n          <div class=\"card\">\n            <div class=\"card-header border-transparent\">\n              <h3 class=\"card-title text-bold\">Websites (5)</h3>\n              <div class=\"card-tools\">\n                <a class=\"btn btn-tool\" data-toggle=\"collapse\" href=\"#collapseWebsites\" role=\"button\" aria-expanded=\"false\" aria-controls=\"collapseWebsites\">\n                  <i class=\"fas fa-minus\"></i>\n                </a>\n              </div>\n            </div>\n            <div class=\"collapse\" id=\"collapseWebsites\">\n              <!-- /.card-header -->\n              <div class=\"card-body p-0\">\n                <div class=\"table-responsive\">\n                  <table class=\"table m-0\">\n                    <thead>\n                      <tr>\n                        <th>#</th>\n                        <th>Title</th>\n                        <th>Link</th>\n                        <th>Status</th>\n                        <th>Action</th>\n                      </tr>\n                    </thead>\n                    <tbody>\n                      <tr>\n                        <td>1</td>\n                        <td>My Website 1</td>\n                        <td><a class=\"link\">https://ibssapp.com/my-website-1</a></td>\n                        <td>\n                          <span class=\"badge badge-success\">Published</span>\n                        </td>\n                        <td>\n                          <button class=\"btn btn-primary\" type=\"button\"><i class=\"fas fa-cogs\"></i></button>\n                        </td>\n                      </tr>\n                      <tr>\n                        <td>2</td>\n                        <td>My Website 2</td>\n                        <td><a class=\"link\">https://ibssapp.com/my-website-2</a></td>\n                        <td>\n                          <span class=\"badge badge-info\">Draft</span>\n                        </td>\n                        <td>\n                          <button class=\"btn btn-primary\" type=\"button\"><i class=\"fas fa-cogs\"></i></button>\n                        </td>\n                      </tr>\n                      <tr>\n                        <td>3</td>\n                        <td>My Website 3</td>\n                        <td><a class=\"link\">https://ibssapp.com/my-website-3</a></td>\n                        <td>\n                          <span class=\"badge badge-warning\">Hidden</span>\n                        </td>\n                        <td>\n                          <button class=\"btn btn-primary\" type=\"button\"><i class=\"fas fa-cogs\"></i></button>\n                        </td>\n                      </tr>\n                      <tr>\n                        <td>4</td>\n                        <td>My Website 4</td>\n                        <td><a class=\"link\">https://ibssapp.com/my-website-4</a></td>\n                        <td>\n                          <span class=\"badge badge-primary\">Published</span>\n                        </td>\n                        <td>\n                          <button class=\"btn btn-primary\" type=\"button\"><i class=\"fas fa-cogs\"></i></button>\n                        </td>\n                      </tr>\n                      <tr>\n                        <td>5</td>\n                        <td>My Website 5</td>\n                        <td><a class=\"link\">https://ibssapp.com/my-website-5</a></td>\n                        <td>\n                          <span class=\"badge badge-primary\">Published</span>\n                        </td>\n                        <td>\n                          <button class=\"btn btn-primary\" type=\"button\"><i class=\"fas fa-cogs\"></i></button>\n                        </td>\n                      </tr>\n                    </tbody>\n                  </table>\n                </div>\n                <!-- /.table-responsive -->\n              </div>\n              <!-- /.card-body -->\n              <div class=\"card-footer clearfix\">\n                <!-- <a href=\"javascript:void(0)\" class=\"btn btn-sm btn-info float-left\">Place New Order</a> -->\n                <!-- <a href=\"javascript:void(0)\" class=\"btn btn-sm btn-secondary float-right\">View All Orders</a> -->\n              </div>\n            </div>\n            <!-- /.card-footer -->\n          </div>\n          <!-- /.card -->\n        </div>\n      </div>\n\n      <div class=\"row\">\n        <div class=\"col-md-12\">\n          <div class=\"card\">\n            <div class=\"card-header border-transparent\">\n              <h3 class=\"card-title text-bold\">Applications (5)</h3>\n              <div class=\"card-tools\">\n                <a class=\"btn btn-tool\" data-toggle=\"collapse\" href=\"#collapseApplications\" role=\"button\" aria-expanded=\"false\" aria-controls=\"collapseApplications\">\n                  <i class=\"fas fa-minus\"></i>\n                </a>\n              </div>\n            </div>\n            <div class=\"collapse\" id=\"collapseApplications\">\n              <!-- /.card-header -->\n              <div class=\"card-body p-0\">\n                <div class=\"table-responsive\">\n                  <table class=\"table m-0\">\n                    <thead>\n                      <tr>\n                        <th>#</th>\n                        <th>Title</th>\n                        <th>Link</th>\n                        <th>Status</th>\n                        <th>Action</th>\n                      </tr>\n                    </thead>\n                    <tbody>\n                      <tr>\n                        <td>1</td>\n                        <td>My app 1</td>\n                        <td><a class=\"link\">https://ibssapp.com/my-app-1</a></td>\n                        <td>\n                          <span class=\"badge badge-success\">Published</span>\n                        </td>\n                        <td>\n                          <button class=\"btn btn-primary\" type=\"button\"><i class=\"fas fa-cogs\"></i></button>\n                        </td>\n                      </tr>\n                      <tr>\n                        <td>2</td>\n                        <td>My app 2</td>\n                        <td><a class=\"link\">https://ibssapp.com/my-app-2</a></td>\n                        <td>\n                          <span class=\"badge badge-info\">Draft</span>\n                        </td>\n                        <td>\n                          <button class=\"btn btn-primary\" type=\"button\"><i class=\"fas fa-cogs\"></i></button>\n                        </td>\n                      </tr>\n                      <tr>\n                        <td>3</td>\n                        <td>My app 3</td>\n                        <td><a class=\"link\">https://ibssapp.com/my-app-3</a></td>\n                        <td>\n                          <span class=\"badge badge-warning\">Hidden</span>\n                        </td>\n                        <td>\n                          <button class=\"btn btn-primary\" type=\"button\"><i class=\"fas fa-cogs\"></i></button>\n                        </td>\n                      </tr>\n                      <tr>\n                        <td>4</td>\n                        <td>My app 4</td>\n                        <td><a class=\"link\">https://ibssapp.com/my-app-4</a></td>\n                        <td>\n                          <span class=\"badge badge-primary\">Published</span>\n                        </td>\n                        <td>\n                          <button class=\"btn btn-primary\" type=\"button\"><i class=\"fas fa-cogs\"></i></button>\n                        </td>\n                      </tr>\n                      <tr>\n                        <td>5</td>\n                        <td>My app 5</td>\n                        <td><a class=\"link\">https://ibssapp.com/my-app-5</a></td>\n                        <td>\n                          <span class=\"badge badge-primary\">Published</span>\n                        </td>\n                        <td>\n                          <button class=\"btn btn-primary\" type=\"button\"><i class=\"fas fa-cogs\"></i></button>\n                        </td>\n                      </tr>\n                    </tbody>\n                  </table>\n                </div>\n                <!-- /.table-responsive -->\n              </div>\n              <!-- /.card-body -->\n              <div class=\"card-footer clearfix\">\n                <!-- <a href=\"javascript:void(0)\" class=\"btn btn-sm btn-info float-left\">Place New Order</a> -->\n                <!-- <a href=\"javascript:void(0)\" class=\"btn btn-sm btn-secondary float-right\">View All Orders</a> -->\n              </div>\n            </div>\n            <!-- /.card-footer -->\n          </div>\n          <!-- /.card -->\n        </div>\n      </div>\n\n    </div>\n  </section>\n</div>\n"
+module.exports = "<div class=\"content-wrapper pt-3\" [ngClass]=\"{'menu-collapsed':config.isNavHidden}\">\n  <!-- Content Header (Page header) -->\n  <!-- <section class=\"content-header\">\n    <div class=\"container-fluid\">\n      <div class=\"row mb-2\">\n        <div class=\"col-sm-6\">\n          <h1>Dashboard</h1>\n        </div>\n      </div>\n    </div>\n  </section> -->\n\n  <!-- Main content -->\n  <section class=\"content\">\n    <div class=\"container-fluid\">\n      <div class=\"row\">\n        <div class=\"col-md-12\">\n          <div class=\"card\">\n            <div class=\"card-header border-transparent\">\n              <h3 class=\"card-title text-bold\">Websites (5)</h3>\n\n              <div class=\"card-tools\">\n                <!-- <button type=\"button\" class=\"btn btn-primary\">\n                  ADD\n                </button> -->\n                <a class=\"btn btn-tool collapsed\" data-toggle=\"collapse\" href=\"#collapseWebsites\" role=\"button\" aria-expanded=\"false\" aria-controls=\"collapseWebsites\">\n                  <i class=\"fas fa-caret-right expand\"></i>\n                  <i class=\"fas fa-caret-down collapse\"></i>\n                </a>\n              </div>\n            </div>\n            <div class=\"collapse\" id=\"collapseWebsites\">\n              <!-- /.card-header -->\n              <div class=\"card-body p-0\">\n                <div class=\"table-responsive\">\n                  <table class=\"table m-0\">\n                    <thead>\n                      <tr>\n                        <th>#</th>\n                        <th>Title</th>\n                        <th>Link</th>\n                        <th>Status</th>\n                        <th>Action</th>\n                      </tr>\n                    </thead>\n                    <tbody>\n                      <tr>\n                        <td>1</td>\n                        <td>My Website 1</td>\n                        <td><a class=\"link\">https://ibssapp.com/my-website-1</a></td>\n                        <td>\n                          <span class=\"badge badge-success\">Published</span>\n                        </td>\n                        <td>\n                          <button class=\"btn btn-primary\" type=\"button\"><i class=\"fas fa-cogs\"></i></button>\n                        </td>\n                      </tr>\n                      <tr>\n                        <td>2</td>\n                        <td>My Website 2</td>\n                        <td><a class=\"link\">https://ibssapp.com/my-website-2</a></td>\n                        <td>\n                          <span class=\"badge badge-info\">Draft</span>\n                        </td>\n                        <td>\n                          <button class=\"btn btn-primary\" type=\"button\"><i class=\"fas fa-cogs\"></i></button>\n                        </td>\n                      </tr>\n                      <tr>\n                        <td>3</td>\n                        <td>My Website 3</td>\n                        <td><a class=\"link\">https://ibssapp.com/my-website-3</a></td>\n                        <td>\n                          <span class=\"badge badge-warning\">Hidden</span>\n                        </td>\n                        <td>\n                          <button class=\"btn btn-primary\" type=\"button\"><i class=\"fas fa-cogs\"></i></button>\n                        </td>\n                      </tr>\n                      <tr>\n                        <td>4</td>\n                        <td>My Website 4</td>\n                        <td><a class=\"link\">https://ibssapp.com/my-website-4</a></td>\n                        <td>\n                          <span class=\"badge badge-primary\">Published</span>\n                        </td>\n                        <td>\n                          <button class=\"btn btn-primary\" type=\"button\"><i class=\"fas fa-cogs\"></i></button>\n                        </td>\n                      </tr>\n                      <tr>\n                        <td>5</td>\n                        <td>My Website 5</td>\n                        <td><a class=\"link\">https://ibssapp.com/my-website-5</a></td>\n                        <td>\n                          <span class=\"badge badge-primary\">Published</span>\n                        </td>\n                        <td>\n                          <button class=\"btn btn-primary\" type=\"button\"><i class=\"fas fa-cogs\"></i></button>\n                        </td>\n                      </tr>\n                    </tbody>\n                  </table>\n                </div>\n                <!-- /.table-responsive -->\n              </div>\n              <!-- /.card-body -->\n              <div class=\"card-footer clearfix\">\n                <!-- <a href=\"javascript:void(0)\" class=\"btn btn-sm btn-info float-left\">Place New Order</a> -->\n                <!-- <a href=\"javascript:void(0)\" class=\"btn btn-sm btn-secondary float-right\">View All Orders</a> -->\n              </div>\n            </div>\n            <!-- /.card-footer -->\n          </div>\n          <!-- /.card -->\n        </div>\n      </div>\n\n      <div class=\"row\">\n        <div class=\"col-md-12\">\n          <div class=\"card\">\n            <div class=\"card-header border-transparent\">\n              <h3 class=\"card-title text-bold\">Applications (5)</h3>\n              <div class=\"card-tools\">\n                <a class=\"btn btn-tool collapsed\" data-toggle=\"collapse\" href=\"#collapseApplications\" role=\"button\" aria-expanded=\"false\" aria-controls=\"collapseApplications\">\n                  <i class=\"fas fa-caret-right expand\"></i>\n                  <i class=\"fas fa-caret-down collapse\"></i>\n                </a>\n              </div>\n            </div>\n            <div class=\"collapse\" id=\"collapseApplications\">\n              <!-- /.card-header -->\n              <div class=\"card-body p-0\">\n                <div class=\"table-responsive\">\n                  <table class=\"table m-0\">\n                    <thead>\n                      <tr>\n                        <th>#</th>\n                        <th>Title</th>\n                        <th>Link</th>\n                        <th>Status</th>\n                        <th>Action</th>\n                      </tr>\n                    </thead>\n                    <tbody>\n                      <tr>\n                        <td>1</td>\n                        <td>My app 1</td>\n                        <td><a class=\"link\">https://ibssapp.com/my-app-1</a></td>\n                        <td>\n                          <span class=\"badge badge-success\">Published</span>\n                        </td>\n                        <td>\n                          <button class=\"btn btn-primary\" type=\"button\"><i class=\"fas fa-cogs\"></i></button>\n                        </td>\n                      </tr>\n                      <tr>\n                        <td>2</td>\n                        <td>My app 2</td>\n                        <td><a class=\"link\">https://ibssapp.com/my-app-2</a></td>\n                        <td>\n                          <span class=\"badge badge-info\">Draft</span>\n                        </td>\n                        <td>\n                          <button class=\"btn btn-primary\" type=\"button\"><i class=\"fas fa-cogs\"></i></button>\n                        </td>\n                      </tr>\n                      <tr>\n                        <td>3</td>\n                        <td>My app 3</td>\n                        <td><a class=\"link\">https://ibssapp.com/my-app-3</a></td>\n                        <td>\n                          <span class=\"badge badge-warning\">Hidden</span>\n                        </td>\n                        <td>\n                          <button class=\"btn btn-primary\" type=\"button\"><i class=\"fas fa-cogs\"></i></button>\n                        </td>\n                      </tr>\n                      <tr>\n                        <td>4</td>\n                        <td>My app 4</td>\n                        <td><a class=\"link\">https://ibssapp.com/my-app-4</a></td>\n                        <td>\n                          <span class=\"badge badge-primary\">Published</span>\n                        </td>\n                        <td>\n                          <button class=\"btn btn-primary\" type=\"button\"><i class=\"fas fa-cogs\"></i></button>\n                        </td>\n                      </tr>\n                      <tr>\n                        <td>5</td>\n                        <td>My app 5</td>\n                        <td><a class=\"link\">https://ibssapp.com/my-app-5</a></td>\n                        <td>\n                          <span class=\"badge badge-primary\">Published</span>\n                        </td>\n                        <td>\n                          <button class=\"btn btn-primary\" type=\"button\"><i class=\"fas fa-cogs\"></i></button>\n                        </td>\n                      </tr>\n                    </tbody>\n                  </table>\n                </div>\n                <!-- /.table-responsive -->\n              </div>\n              <!-- /.card-body -->\n              <div class=\"card-footer clearfix\">\n                <!-- <a href=\"javascript:void(0)\" class=\"btn btn-sm btn-info float-left\">Place New Order</a> -->\n                <!-- <a href=\"javascript:void(0)\" class=\"btn btn-sm btn-secondary float-right\">View All Orders</a> -->\n              </div>\n            </div>\n            <!-- /.card-footer -->\n          </div>\n          <!-- /.card -->\n        </div>\n      </div>\n\n    </div>\n  </section>\n</div>\n"
 
 /***/ }),
 
@@ -813,6 +839,69 @@ var ProfileComponent = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/components/main/wizard/wizard.component.html":
+/*!**********************************************************!*\
+  !*** ./src/components/main/wizard/wizard.component.html ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<p>\n  wizard works!\n</p>\n"
+
+/***/ }),
+
+/***/ "./src/components/main/wizard/wizard.component.scss":
+/*!**********************************************************!*\
+  !*** ./src/components/main/wizard/wizard.component.scss ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/components/main/wizard/wizard.component.ts":
+/*!********************************************************!*\
+  !*** ./src/components/main/wizard/wizard.component.ts ***!
+  \********************************************************/
+/*! exports provided: WizardComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "WizardComponent", function() { return WizardComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var WizardComponent = /** @class */ (function () {
+    function WizardComponent() {
+    }
+    WizardComponent.prototype.ngOnInit = function () {
+    };
+    WizardComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'ibss-wizard',
+            template: __webpack_require__(/*! ./wizard.component.html */ "./src/components/main/wizard/wizard.component.html"),
+            styles: [__webpack_require__(/*! ./wizard.component.scss */ "./src/components/main/wizard/wizard.component.scss")]
+        }),
+        __metadata("design:paramtypes", [])
+    ], WizardComponent);
+    return WizardComponent;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/components/page-not-found/page-not-found.component.html":
 /*!*********************************************************************!*\
   !*** ./src/components/page-not-found/page-not-found.component.html ***!
@@ -820,7 +909,7 @@ var ProfileComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  page-not-found works!\n</p>\n"
+module.exports = "<div class=\"content-wrapper\">\n  <!-- Content Header (Page header) -->\n  <section class=\"content-header\">\n    <div class=\"container-fluid\">\n    </div><!-- /.container-fluid -->\n  </section>\n\n  <section class=\"content\">\n    <div class=\"error-page\">\n      <div class=\"error-content text-center\">\n        <h1 class=\"headline text-warning\"><i class=\"fas fa-exclamation-triangle text-warning\"></i> 404</h1>\n        <h3>Oops! Page not found.</h3>\n        <p>\n          We could not find the page you were looking for.\n          Meanwhile, you may <a href=\"/dashboard\">return to dashboard</a>\n        </p>\n      </div>\n    </div>\n  </section>\n</div>\n"
 
 /***/ }),
 
@@ -883,7 +972,7 @@ var PageNotFoundComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\">\n  <div class=\"col-12 mx-auto\">\n    <div class=\"card card-signin my-5\">\n      <div class=\"card-body\">\n        <div class=\"text-center\">\n          <h5>Create an Account</h5>\n        </div>\n        <div class=\"progress\" style=\"height: 3px;\" *ngIf=\"totalStep > 1\">\n          <div class=\"progress-bar\" role=\"progressbar\" [style.width]=\"stepPercent\" aria-valuemin=\"0\"\n            aria-valuemax=\"100\"></div>\n        </div>\n        <br />\n        <!-- Step -1 -->\n        <form #sf=\"ngForm\" id=\"signupForm\" [formGroup]=\"signupForm\" (submit)=\"onSignup()\" >\n          <div id=\"Step1\" [hidden]=\"!(currentStep === 1)\">\n            <div class=\"row pb-2\">\n              <div class=\"col-md-4\">\n                <div class=\"form-label-group\">\n                  <label for=\"inputEmail\">First Name</label>\n                  <input type=\"email\" id=\"inputFirstName\" name=\"firstName\" formControlName=\"firstName\"\n                    class=\"form-control\" placeholder=\"First Name\" required autofocus>\n                  </div>\n                  <small *ngIf=\"sf.form.controls.firstName.touched && !sf.form.controls.firstName.valid\" class=\"text-danger\">Please fill in the First name</small>\n              </div>\n              <div class=\"col-md-4\">\n                <div class=\"form-label-group\">\n                  <label for=\"inputEmail\">Middle Name</label>\n                  <input type=\"email\" id=\"inputMiddleName\" name=\"middleName\" formControlName=\"middleName\"\n                    class=\"form-control\" placeholder=\"Middle Name\" required autofocus>\n                  </div>\n                  <small *ngIf=\"sf.form.controls.middleName.touched && !sf.form.controls.middleName.valid\" class=\"text-danger\">Please fill in the Middle name</small>\n              </div>\n              <div class=\"col-md-4\">\n                <div class=\"form-label-group\">\n                  <label for=\"inputEmail\">Last Name</label>\n                  <input type=\"email\" id=\"inputLastName\" name=\"lastName\" formControlName=\"lastName\" class=\"form-control\"\n                    placeholder=\"Last Name\" required autofocus>\n                </div>\n                <small *ngIf=\"sf.form.controls.lastName.touched && !sf.form.controls.lastName.valid\" class=\"text-danger\">Please fill in the Last name</small>\n              </div>\n            </div>\n            <div class=\"row  pb-2\">\n              <div class=\"col-md-4\">\n                <div class=\"form-label-group\">\n                  <label for=\"inputMobile\">Mobile</label>\n                  <!-- <ngx-intl-tel-input\n                      [inputId]=\"'mobileNo'\"\n                      [cssClass]=\"'custom'\" \n                      [preferredCountries]=\"preferredCountries\"\n                      [enableAutoCountrySelect]=\"true\" \n                      [enablePlaceholder]=\"true\" \n                      [searchCountryFlag]=\"true\"\n                      [searchCountryField]=\"[SearchCountryField.Iso2, SearchCountryField.Name]\"\n                      [selectFirstCountry]=\"false\" \n                      [selectedCountryISO]=\"CountryISO.India\"\n                      [maxLength]=\"15\" \n                      [tooltipField]=\"TooltipLabel.Name\" \n                      [phoneValidation]=\"true\" \n                      [separateDialCode]=\"false\"\n                      name=\"phone\" formControlName=\"phone\">\n                    </ngx-intl-tel-input> -->\n                  <input type=\"email\" id=\"inputMobile\" name=\"mobile\" formControlName=\"mobile\" class=\"form-control\"\n                    placeholder=\"Mobile\" required autofocus>\n                </div>\n                <small *ngIf=\"sf.form.controls.mobile.touched && !sf.form.controls.mobile.valid\" class=\"text-danger\">Please fill in the mobile number</small>\n              </div>\n              <div class=\"col-md-4\">\n                <div class=\"form-label-group\">\n                  <label for=\"inputEmail\">Email</label>\n                  <input type=\"email\" id=\"inputEmail\" name=\"email\" formControlName=\"email\" class=\"form-control\"\n                    placeholder=\"Email address\" required autofocus>\n                </div>\n                <small *ngIf=\"sf.form.controls.email.touched && !sf.form.controls.email.valid\" class=\"text-danger\">Please fill in valid email address</small>\n              </div>\n              <div class=\"col-md-4\">\n                <div class=\"form-label-group\">\n                  <label for=\"inputPassword\">Password</label>\n                  <input type=\"password\" id=\"inputPassword\" name=\"password\" formControlName=\"password\"\n                    class=\"form-control\" placeholder=\"Password\" required>\n                  <password-strength-meter *ngIf=\"sf.form.controls.password.value && sf.form.controls.password.value.length>0\" [password]=\"sf.form.controls.password.value\"></password-strength-meter>\n                </div>\n                <small *ngIf=\"sf.form.controls.password.touched &&!sf.form.controls.password.valid\" class=\"text-danger\">Please fill in the password</small>\n\n              </div>\n            </div>\n\n          </div>\n          <!-- Step - 2 -->\n          <div id=\"Step2\" [hidden]=\"!(currentStep === 2)\">\n            Step - 2\n          </div>\n          <!-- Step - 3 -->\n          <div id=\"Step3\" [hidden]=\"!(currentStep === 3)\">\n            Step - 3\n          </div>\n          <!-- Step - 4 -->\n          <div id=\"Step4\" [hidden]=\"!(currentStep === 4)\">\n            Step - 4\n          </div>\n\n          <br />\n          <div class=\"row text center\">\n            <div class=\"col-12 \">\n              <button class=\"btn btn-primary text-uppercase float-left\" type=\"button\" (click)=\"gotToStep('prev')\"\n                *ngIf=\"currentStep > 1\"><i class=\"far fa-arrow-alt-circle-left\"></i>&nbsp;Previous</button>\n              <button class=\"btn btn-primary text-uppercase float-right\" type=\"button\" (click)=\"gotToStep('next')\"\n                *ngIf=\"currentStep < totalStep\">Next&nbsp;<i class=\"far fa-arrow-alt-circle-right\"></i></button>\n              <button class=\"btn btn-primary text-uppercase float-right\" type=\"submit\" form=\"signupForm\"\n                *ngIf=\"currentStep === totalStep\" [disabled]=\"!sf.form.valid\">Create</button>\n            </div>\n          </div>\n        </form>\n      </div>\n    </div>\n  </div>\n</div>\n"
+module.exports = "<div class=\"row\">\n  <div class=\"col-12 mx-auto\">\n    <div class=\"card card-signin my-5\">\n      <div class=\"card-body\">\n        <div class=\"text-center\">\n          <h5>Create an Account</h5>\n        </div>\n        <div class=\"progress\" style=\"height: 3px;\" *ngIf=\"totalStep > 1\">\n          <div class=\"progress-bar\" role=\"progressbar\" [style.width]=\"stepPercent\" aria-valuemin=\"0\"\n            aria-valuemax=\"100\"></div>\n        </div>\n        <br />\n        <!-- Step -1 -->\n        <form #sf=\"ngForm\" id=\"signupForm\" [formGroup]=\"signupForm\" (submit)=\"onSignup()\">\n          <div id=\"Step1\" [hidden]=\"!(currentStep === 1)\">\n            <div class=\"row pb-2\">\n              <div class=\"col-md-4\">\n                <div class=\"form-label-group\">\n                  <label for=\"inputEmail\">First Name <span class=\"required\">*</span></label>\n                  <input type=\"email\" id=\"inputFirstName\" name=\"firstName\" formControlName=\"firstName\"\n                    class=\"form-control\" placeholder=\"First Name\">\n                </div>\n                <small *ngIf=\"sf.form.controls.firstName.touched && !sf.form.controls.firstName.valid\"\n                  class=\"text-danger\">First name is required</small>\n              </div>\n              <div class=\"col-md-4\">\n                <div class=\"form-label-group\">\n                  <label for=\"inputEmail\">Middle Name </label>\n                  <input type=\"email\" id=\"inputMiddleName\" name=\"middleName\" formControlName=\"middleName\"\n                    class=\"form-control\" placeholder=\"Middle Name\">\n                </div>\n                <small *ngIf=\"sf.form.controls.middleName.touched && !sf.form.controls.middleName.valid\"\n                  class=\"text-danger\">Please fill in the Middle name</small>\n              </div>\n              <div class=\"col-md-4\">\n                <div class=\"form-label-group\">\n                  <label for=\"inputEmail\">Last Name <span class=\"required\">*</span></label>\n                  <input type=\"email\" id=\"inputLastName\" name=\"lastName\" formControlName=\"lastName\" class=\"form-control\"\n                    placeholder=\"Last Name\">\n                </div>\n                <small *ngIf=\"sf.form.controls.lastName.touched && !sf.form.controls.lastName.valid\"\n                  class=\"text-danger\">Last name is required</small>\n              </div>\n            </div>\n            <div class=\"row  pb-2\">\n              <div class=\"col-md-6\">\n                <div class=\"form-label-group\">\n                  <label for=\"inputMobile\">Mobile <span class=\"required\">*</span></label>\n                  <input type=\"phone\" id=\"inputMobile\" name=\"mobile\" formControlName=\"mobile\" class=\"form-control\"\n                    placeholder=\"Mobile\">\n                </div>\n                <small *ngIf=\"sf.form.controls.mobile.touched && !sf.form.controls.mobile.valid\"\n                  class=\"text-danger\">Mobile number is required.<br/>format:code-mobileno ( eg.+XXX-XXXXXXXXX)</small>\n              </div>\n              <div class=\"col-md-6\">\n                <div class=\"form-label-group\">\n                  <label for=\"inputEmail\">Email <span class=\"required\">*</span></label>\n                  <input type=\"email\" id=\"inputEmail\" name=\"email\" formControlName=\"email\" class=\"form-control\"\n                    placeholder=\"Email address\" email>\n                </div>\n                <small *ngIf=\"sf.form.controls.email.touched && !sf.form.controls.email.valid\"\n                  class=\"text-danger\">Valid email address is required</small>\n              </div>\n            </div>\n            <div class=\"row pb-2\">\n              <div class=\"col-md-6\">\n                <div class=\"form-label-group\">\n                  <label for=\"inputPassword\">Password <span class=\"required\">*</span></label>\n                  <!-- <input type=\"password\" id=\"inputPassword\" name=\"password\" formControlName=\"password\"\n                    class=\"form-control\" placeholder=\"Password\" required> -->\n                  <div class=\"input-group mb-3\">\n                    <input [type]=\"!isVisible?.password?'password':'text'\" id=\"inputPassword\" name=\"password\" formControlName=\"password\"\n                      class=\"form-control\" placeholder=\"Password\" required>\n                    <div class=\"input-group-append\" id=\"button-addon3\">\n                      <button class=\"btn btn-outline-primary border\" type=\"button\" (click)=\"isVisible.password = !isVisible.password\">\n                        <i class=\"fa\" [ngClass]=\"{'fa-eye':!isVisible.password, 'fa-eye-slash':isVisible.password}\" aria-hidden=\"true\"></i>\n                      </button>\n                    </div>\n                  </div>\n                  <password-strength-meter *ngIf=\"sf.form.controls.password.value && sf.form.controls.password.value.length>0\" [password]=\"sf.form.controls.password.value\"></password-strength-meter>\n                </div>\n                <div *ngIf=\"sf.form.controls.password.touched\" class=\"text-danger\">\n                  <small *ngIf=\"!sf.form.controls.password.valid\">Password is required</small><br/>\n                  <small *ngIf=\"!sf.form.controls.password.valid\">Password should be at least 8 characters long and should contain one number,one uppercase letter and one special character</small>\n                </div>\n              </div>\n              <div class=\"col-md-6\">\n                <div class=\"form-label-group\">\n                  <label for=\"inputPassword\">Confirm Password <span class=\"required\">*</span></label>\n                  <!-- <input type=\"password\" id=\"confirmPassword\" name=\"confirmPassword\" formControlName=\"confirmPassword\"\n                    class=\"form-control\" placeholder=\"Password\" required> -->\n                  <div class=\"input-group mb-3\">\n                    <input [type]=\"!isVisible?.confirmPassword?'password':'text'\" id=\"confirmPassword\" name=\"confirmPassword\" formControlName=\"confirmPassword\"\n                      class=\"form-control\" placeholder=\"Password\" required>\n                    <div class=\"input-group-append\" id=\"button-addon3\">\n                      <button class=\"btn btn-outline-primary border\" type=\"button\" (click)=\"isVisible.confirmPassword = !isVisible.confirmPassword\">\n                        <i class=\"fa\" [ngClass]=\"{'fa-eye':!isVisible.confirmPassword, 'fa-eye-slash':isVisible.confirmPassword}\" aria-hidden=\"true\"></i>\n                      </button>\n                    </div>\n                  </div>\n                </div>\n                <small *ngIf=\"sf.form.controls.confirmPassword.touched &&!sf.form.controls.confirmPassword.valid\"\n                  class=\"text-danger\">Password doesn't match</small>\n              </div>\n            </div>\n          </div>\n          <!-- Step - 2 -->\n          <div id=\"Step2\" [hidden]=\"!(currentStep === 2)\">\n            Step - 2\n          </div>\n          <!-- Step - 3 -->\n          <div id=\"Step3\" [hidden]=\"!(currentStep === 3)\">\n            Step - 3\n          </div>\n          <!-- Step - 4 -->\n          <div id=\"Step4\" [hidden]=\"!(currentStep === 4)\">\n            Step - 4\n          </div>\n\n          <br />\n          <div class=\"row text-center\">\n            <div class=\"col-12 \">\n              <button class=\"btn btn-secondary text-uppercase\" type=\"button\" (click)=\"resetForm()\"\n              [disabled]=\"sf.form.pristine\">&nbsp;Reset</button> &nbsp;\n              <button class=\"btn btn-primary text-uppercase float-left\" type=\"button\" (click)=\"gotToStep('prev')\"\n                *ngIf=\"currentStep > 1\"><i class=\"far fa-arrow-alt-circle-left\"></i>&nbsp;Previous</button>\n              <button class=\"btn btn-primary text-uppercase float-right\" type=\"button\" (click)=\"gotToStep('next')\"\n                *ngIf=\"currentStep < totalStep\">Next&nbsp;<i class=\"far fa-arrow-alt-circle-right\"></i></button>\n              <button class=\"btn btn-primary text-uppercase\" type=\"submit\" form=\"signupForm\"\n                *ngIf=\"currentStep === totalStep\" [disabled]=\"!sf.form.valid\">Create</button>\n            </div>\n          </div>\n        </form>\n      </div>\n    </div>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -894,7 +983,7 @@ module.exports = "<div class=\"row\">\n  <div class=\"col-12 mx-auto\">\n    <di
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ""
+module.exports = ".required{color:red}\n"
 
 /***/ }),
 
@@ -913,6 +1002,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
 /* harmony import */ var _services_auth_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../services/auth.service */ "./src/services/auth.service.ts");
 /* harmony import */ var ngx_toastr__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ngx-toastr */ "./node_modules/ngx-toastr/fesm5/ngx-toastr.js");
+/* harmony import */ var src_config__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/config */ "./src/config.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -925,7 +1015,7 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
-// import { SearchCountryField, TooltipLabel, CountryISO } from 'ngx-intl-tel-input';
+
 
 
 var SignupComponent = /** @class */ (function () {
@@ -933,24 +1023,33 @@ var SignupComponent = /** @class */ (function () {
         this.router = router;
         this.authService = authService;
         this.toastr = toastr;
+        this.config = src_config__WEBPACK_IMPORTED_MODULE_5__["CONFIG"];
         this.currentStep = 1;
         this.totalStep = 1;
         this.stepPercent = "25%";
         this.separateDialCode = true;
-        // SearchCountryField = SearchCountryField;
-        // TooltipLabel = TooltipLabel;
-        // CountryISO = CountryISO;
-        // preferredCountries: CountryISO[] = [CountryISO.India, CountryISO.UnitedStates, CountryISO.UnitedKingdom];
         this.signupForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormGroup"]({
             firstName: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"]("", [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required]),
-            middleName: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](""),
+            middleName: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"]("", []),
             lastName: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"]("", [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required]),
-            mobile: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"]("", [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required]),
-            email: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"]("", [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].email]),
-            password: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"]("", [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required]),
+            mobile: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"]("", [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].pattern("^\\+[1-9]{1,6}\-[d0-9]{10,14}$")]),
+            email: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"]("", [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required, this.checkEmail()]),
+            password: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"]("", [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required, this.checkPassword()]),
+            confirmPassword: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"]("", [
+                _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required,
+                this.matchValues('password'),
+            ])
         });
+        this.isVisible = {
+            password: false,
+            confirmPassword: false,
+        };
     }
     SignupComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.signupForm.controls.password.valueChanges.subscribe(function () {
+            _this.signupForm.controls.confirmPassword.updateValueAndValidity();
+        });
     };
     SignupComponent.prototype.gotToStep = function (action) {
         if (action === 'prev') {
@@ -1011,13 +1110,63 @@ var SignupComponent = /** @class */ (function () {
             this.authService.signup(signupData)
                 .subscribe(function (res) {
                 console.log('signup success', res);
-                _this.signupForm.reset();
-                _this.toastr.success('Registered Successfully. Kindly login to proceed');
+                if (res.error.responseCode == 0) {
+                    _this.resetForm();
+                    _this.toastr.success('Registered Successfully. Kindly login to proceed');
+                }
+                else {
+                    if (res.error.businessValidation.length > 0) {
+                        for (var i = 0; i < res.error.businessValidation.length; i++) {
+                            _this.toastr.error(res.error.businessValidation[i].errorDesc);
+                        }
+                    }
+                    if (res.error.dataValidation.length > 0) {
+                        for (var i = 0; i < res.error.dataValidation.length; i++) {
+                            _this.toastr.error(res.error.dataValidation[i].errorDesc);
+                        }
+                    }
+                }
             }, function (error) {
                 console.log('signup failure', error);
+                _this.toastr.error("Sigup Failed, Please try again after sometimes");
             });
             // this.router.navigate(['/dashboard']);
         }
+    };
+    SignupComponent.prototype.resetForm = function () {
+        this.signupForm.reset();
+        this.isVisible = {
+            password: false,
+            confirmPassword: false,
+        };
+    };
+    SignupComponent.prototype.matchValues = function (matchTo // name of the control to match to
+    ) {
+        return function (control) {
+            return !!control.parent &&
+                !!control.parent.value &&
+                control.value === control.parent.controls[matchTo].value
+                ? null
+                : { isMatching: false };
+        };
+    };
+    SignupComponent.prototype.checkEmail = function () {
+        var _this = this;
+        return function (control) {
+            return !!control.value &&
+                _this.config.regEx.email.test(control.value.toLowerCase())
+                ? null
+                : { isMatching: false };
+        };
+    };
+    SignupComponent.prototype.checkPassword = function () {
+        var _this = this;
+        return function (control) {
+            return !!control.value &&
+                _this.config.regEx.password.test(control.value)
+                ? null
+                : { isMatching: false };
+        };
     };
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])('sf'),
@@ -1055,8 +1204,8 @@ var CONFIG = /** @class */ (function () {
     }
     CONFIG.isLoggedin = false;
     CONFIG.app = {
-        name: "Top-Secret",
-        tag: "Expand yourself!!!"
+        name: "TechIntent",
+        tag: "All your Techincal needs under one roof"
     };
     CONFIG.siteUrl = "http://208.109.8.60:8081/";
     CONFIG.apiUrl = "http://208.109.8.60:8083/";
@@ -1064,6 +1213,10 @@ var CONFIG = /** @class */ (function () {
     CONFIG.user = null;
     CONFIG.isNavHidden = false;
     CONFIG.menuItems = [];
+    CONFIG.regEx = {
+        email: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+        password: /^(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,20}$/
+    };
     return CONFIG;
 }());
 
@@ -1264,6 +1417,11 @@ var AuthService = /** @class */ (function () {
         this.config.user = res.serviceData;
         this.config.isLoggedin = true;
         this.router.navigate(['/dashboard']);
+        var ibssApp = {
+            token: token,
+            res: res
+        };
+        sessionStorage.setItem("ibssApp", JSON.stringify(ibssApp));
     };
     AuthService.prototype.signup = function (signupData) {
         var headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]();
@@ -1279,6 +1437,17 @@ var AuthService = /** @class */ (function () {
         // }
         // formBody = formBody.join("&");
         return this.http.post(this._signupUrl, signupData, { headers: headers });
+    };
+    AuthService.prototype.checkToken = function () {
+        var sesssion = sessionStorage.getItem("ibssApp");
+        if (sesssion && sesssion.length > 0) {
+            var ibssApp = JSON.parse(sesssion);
+            if (ibssApp) {
+                this.config.token = ibssApp.token;
+                this.config.user = ibssApp.res.serviceData;
+                this.config.isLoggedin = true;
+            }
+        }
     };
     AuthService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),
