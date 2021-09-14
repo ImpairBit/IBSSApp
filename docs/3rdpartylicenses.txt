@@ -511,6 +511,9 @@ SOFTWARE.
 ngx-color-picker
 MIT
 
+ngx-colors
+MIT
+
 ngx-file-drop
 MIT
 
